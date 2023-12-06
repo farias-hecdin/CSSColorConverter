@@ -37,7 +37,7 @@ M.transform_text = function(input)
 end
 
 M.paste_at_cursor = function(value)
-  local res = vim.api.nvim_eval(" input('[ColorCommander.nvim] Do you want paste? [y]es [n]o: ')")
+  local res = vim.api.nvim_eval(" input('[ColorCommander.nvim] Would you like to paste the color name? [y]es [n]o: ')")
   if res == "y" then
     vim.cmd("normal! i" .. value)
   end

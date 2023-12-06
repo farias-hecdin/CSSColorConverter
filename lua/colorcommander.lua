@@ -61,7 +61,7 @@ M.get_colorname = function()
 
   color_names = N.nearest_color(target_hex, color_names)
   res = color_names.name
-  vim.print(plugin_name .. ' ' .. target_hex .. ' equal to: ' .. res)
+  vim.print(plugin_name .. ' ' .. target_hex .. ' is equal to: ' .. res)
 
   res = U.transform_text(res)
   U.paste_at_cursor(res)

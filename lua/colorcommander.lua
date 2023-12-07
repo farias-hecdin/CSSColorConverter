@@ -12,9 +12,11 @@ M.setup = function(options)
   -- Create commands
   vim.api.nvim_create_user_command("ColorToName", M.get_colorname, {})
   vim.api.nvim_create_user_command("ColorNameInstall", C.core, {})
+  vim.api.nvim_create_user_command("ColorPaste", M.get_color, {})
   -- and keymaps
   if not O.options.disable_keymaps then
     vim.api.nvim_set_keymap("n", "<leader>cn", ":ColorToName<CR>", { noremap = true, silent = true })
+    vim.api.nvim_set_keymap("n", "<leader>cp", ":ColorPaste<CR>", { noremap = true, silent = true })
     -- vim.api.nvim_set_keymap("n", "<leader>ch", ":ColorToHex<CR>", { noremap = true, silent = true })
     -- vim.api.nvim_set_keymap("n", "<leader>cH", ":ColorToHsl<CR>", { noremap = true, silent = true })
     -- vim.api.nvim_set_keymap("n", "<leader>cr", ":ColorToRgb<CR>", { noremap = true, silent = true })
@@ -31,8 +33,9 @@ M.virtual_text = function()
   M.namespace = vim.api.nvim_create_namespace("color-commander")
   -- Change filtype format from "*.css" to "css"
   local filetypes = {}
+  local table_insert = table.insert
   for _, filetype in ipairs(O.options.filetypes) do
-    table.insert(filetypes, "*" .. filetype)
+    table_insert(filetypes, "*" .. filetype)
   end
 
   vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "CursorMoved", "CursorMovedI" }, {
@@ -43,9 +46,21 @@ M.virtual_text = function()
   })
 end
 
-M.get_colorname = function()
+M.get_color = function()
+  local virtual_text = {}
+  -- Get current line content
   local line = vim.api.nvim_win_get_cursor(0)[1]
   local line_content = vim.api.nvim_buf_get_lines(0, line - 1, line, false)[1]
+
+  local res = C.get_hex_value(line_content, virtual_text)
+  U.paste_at_cursor(false, res)
+end
+
+M.get_colorname = function()
+  -- Get current line content
+  local line = vim.api.nvim_win_get_cursor(0)[1]
+  local line_content = vim.api.nvim_buf_get_lines(0, line - 1, line, false)[1]
+
   local target_hex = C.get_hex_value(line_content, nil)
   local res = nil
 
@@ -61,7 +76,7 @@ M.get_colorname = function()
     vim.print(plugin_name .. ' ' .. target_hex .. ' is equal to: ' .. res)
 
     res = U.transform_text(res)
-    U.paste_at_cursor(res)
+    U.paste_at_cursor(true, res)
   end
 end
 
@@ -70,7 +85,6 @@ M.get_color_details = function()
   -- Get current line content
   local line = vim.api.nvim_win_get_cursor(0)[1]
   local line_content = vim.api.nvim_buf_get_lines(0, line - 1, line, false)[1]
-
   C.get_hex_value(line_content, virtual_text)
 
   -- Check if an extmark already exists

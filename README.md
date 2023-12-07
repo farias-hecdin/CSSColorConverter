@@ -24,7 +24,6 @@ Usando [`folke/lazy.nvim`](https://github.com/folke/lazy.nvim):
     config = true,
     -- Si quieres configurar algunas opciones, sustituye la línea anterior con:
     -- config = function()
-    --    require('colorcommander').setup({})
     -- end,
 }
 ```
@@ -34,11 +33,11 @@ Usando [`folke/lazy.nvim`](https://github.com/folke/lazy.nvim):
 Estas son las opciones de configuración predeterminadas:
 
 ```lua
-{
+require('colorcommander').setup({{
     show_virtual_text = true,
     disable_keymaps = false,
     filetypes = { "css", "scss", "sass" },
-}
+})
 ```
 
 ### Comandos y atajos de teclado

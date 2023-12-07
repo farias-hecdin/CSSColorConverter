@@ -3,7 +3,6 @@ local O = require('options')
 local U = require('utils.utils')
 local convert = require('convert')
 local rgb = require("utils.color_rgb")
-local hex = require("utils.color_hex")
 local hsl = require("utils.color_hsl")
 local lch = require("utils.color_lch")
 
@@ -71,32 +70,38 @@ M.get_hex_value = function(line_content, virtual_text)
 
   if "rgb" == line_content:match("rgb") then
     res = U.convert_color_to_hex(line_content, "rgb%((%d+), (%d+), (%d+)%)", rgb.rgbToHex, virtual_text)
-  end
-  if "hsl" == line_content:match("hsl") then
+  elseif "hsl" == line_content:match("hsl") then
     res = U.convert_color_to_hex(line_content, "hsl%((%d+), (%d+)%p?, (%d+)%p?%)", hsl.hslToHex, virtual_text)
-  end
-  if "lch" == line_content:match("lch") then
+  elseif "lch" == line_content:match("lch") then
     res = U.convert_color_to_hex(line_content, "lch%((%d*%.?%d+)%p? (%d*%.?%d+) (%d*%.?%d+)%)", lch.lchToHex, virtual_text)
-  end
-  if "#" == line_content:match("#") then
+  elseif "#" == line_content:match("#") then
     res = line_content:match("#[%x][%x][%x][%x][%x][%x]")
-
     if virtual_text ~= nil then
       if type(res) ~= 'nil' then
-        local value = M.hex_text(O.options.show_virtual_text_to_hex, res)
+        local value = M.hex_to(O.options.show_virtual_text_to_hex, res)
         table.insert(virtual_text, value)
         res = value
       end
     end
+  else
+    res = nil
   end
 
   return res
 end
 
-function M.hex_text(options, target)
+function M.hex_to(options, target)
   if options == 'lch' then
     local l, c, h = convert.hexToLch(target)
     return 'lch('..l ..'% ' ..c ..' ' ..h ..')'
+  elseif options == 'hsl' then
+    local h, s, l = convert.hexToHsl(target)
+    return 'hsl(' ..h ..', ' ..s ..'%, ' ..l ..'%)'
+  elseif options == 'rgb' then
+    local r, g, b = convert.hexToRgb(target)
+    return 'rgb(' ..r ..', ' ..g ..', ' ..b ..')'
+  else
+    return
   end
 end
 

@@ -8,10 +8,11 @@ end
 M.nearest_color = function(target_hex, color_list)
   local min_distance = 1e9
   local nearest_color = nil
-  local tr, tg, tb = hex.hexToRgb(target_hex)
+  local hexToRgb = hex.hexToRgb
+  local tr, tg, tb = hexToRgb(target_hex)
 
   for _, color in ipairs(color_list) do
-    local r, g, b = hex.hexToRgb(color.hex)
+    local r, g, b = hexToRgb(color.hex)
     local distance = color_distance(tr, tg, tb, r, g, b)
 
     if distance < min_distance then

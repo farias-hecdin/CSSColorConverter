@@ -29,22 +29,25 @@ M.convert_color_to_hex = function(line_content, pattern, conversion_function, ta
 end
 
 M.read_json = function()
-  local data = read_file(vim.fn.expand('~/.local/share/nvim/colorcommander/colornames.json'))
-  return vim.json.decode(data)
+  local fd = read_file(vim.fn.expand('~/.local/share/nvim/colorcommander/colornames.json'))
+  return vim.json.decode(fd)
 end
 
 M.transform_text = function(input)
-  local lower = string.lower(input)
+  local res = string.lower(input)
   -- Reemplazar espacios y símbolos con guiones
-  local res = string.gsub(lower, "['’]", "")
-  res = string.gsub(res, "%W", "-")
-  return res
+  res = string.gsub(res, "['’]", "")
+  return string.gsub(res, "%W", "-")
 end
 
-M.paste_at_cursor = function(value)
-  local res = vim.api.nvim_eval(" input('[ColorCommander.nvim] Would you like to paste the color name? [y]es [n]o: ')")
+M.paste_at_cursor = function(ask, value)
+  local res = 'y'
+  if ask == true then
+    res = vim.api.nvim_eval("input('[ColorCommander.nvim] Would you like to paste the color name? [y]es [n]o: ')")
+  end
   if res == "y" then
     vim.cmd("normal! i" .. value)
+    vim.print('[ColorCommander.nvim] Paste: ' .. value)
   end
 end
 

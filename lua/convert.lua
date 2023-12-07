@@ -4,10 +4,18 @@ local rgb = require("utils.color_rgb")
 local other = require('utils.color_xyz_and_lab')
 
 function M.hexToLch(target)
-  local r, g, b = hex.hexToRgb(target)
-  local x, y, z = rgb.rgbToXyz(r, g, b)
-  local L, A, B = other.xyzToLab(x, y, z)
-  return other.labToLch(L, A, B)
+  local a, b, c = hex.hexToRgb(target)
+  a, b, c = rgb.rgbToXyz(a, b, c)
+  a, b, c = other.xyzToLab(a, b, c)
+  return other.labToLch(a, b, c)
+end
+
+function M.hexToHsl(target)
+  return hex.hexToHsl(target)
+end
+
+function M.hexToRgb(target)
+  return hex.hexToRgb(target)
 end
 
 return M

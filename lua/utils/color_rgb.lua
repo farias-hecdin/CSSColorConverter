@@ -1,4 +1,5 @@
 local M = {}
+local U = require("utils.utils")
 
 function M.rgbToHex(r, g, b)
   local function hexToString(number)
@@ -8,32 +9,31 @@ function M.rgbToHex(r, g, b)
     return chars[high+1] .. chars[low+1]
   end
 
-  local res = "#" .. hexToString(r) .. hexToString(g) .. hexToString(b)
-  return res
+  return "#" .. hexToString(r) .. hexToString(g) .. hexToString(b)
 end
 
 -- Thanks to: https://github.com/EmmanuelOga/columns/blob/master/utils/color.lua
 function M.rgbToHsl(r, g, b)
-  local max, min = math.max(r, g, b), math.min(r, g, b)
-  local h, s, l = 0, 0, (max + min) / 2
+  r, g, b = r / 255, g / 255, b / 255
+    local max, min = math.max(r, g, b), math.min(r, g, b)
+    local h, s, l
+    l = (max + min) / 2
 
-  if max == min then
-    h, s = 0, 0
-  else
-    local d = max - min
-    if l > 0.5 then s = d / (2 - max - min) else s = d / (max + min) end
-    if max == r then
-      h = (g - b) / d
-      if g < b then h = h + 6 end
-    elseif max == g then
-      h = (b - r) / d + 2
-    elseif max == b then
-      h = (r - g) / d + 4
+    if max == min then
+        h, s = 0, 0 -- achromatic
+    else
+        local d = max - min
+        if l > 0.5 then s = d / (2 - max - min) else s = d / (max + min) end
+        if max == r then
+            h = (g - b) / d
+            if g < b then h = h + 6 end
+        elseif max == g then h = (b - r) / d + 2
+        elseif max == b then h = (r - g) / d + 4
+        end
+        h = h / 6
     end
-    h = h / 6
-  end
 
-  return h * 360, s * 100, l * 100
+    return U.round((h * 360), 0), U.round((s * 100), 0), U.round((l * 100), 0)
 end
 
 function M.rgbToXyz(r, g, b)

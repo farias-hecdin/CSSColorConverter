@@ -1,65 +1,6 @@
 -- Thanks to: https://github.com/EmmanuelOga/columns/blob/master/utils/color.lua
-
 local M = {}
 
-function M.hex_to_rgb(hex)
-  hex = string.lower(hex)
-  local ret = {}
-  for i = 0, 2 do
-    local char1 = string.sub(hex, i * 2 + 2, i * 2 + 2)
-    local char2 = string.sub(hex, i * 2 + 3, i * 2 + 3)
-    local digit1 = string.find("0123456789abcdef", char1) - 1
-    local digit2 = string.find("0123456789abcdef", char2) - 1
-    ret[i + 1] = (digit1 * 16 + digit2) / 255
-  end
-  return ret
-end
-
---[[
- * Converts an RGB color value to HSL. Conversion formula
- * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
- * Assumes r, g, and b are contained in the set [0, 255] and
- * returns h, s, and l in the set [0, 1].
- *
- * @param   Number  r   The red color value
- * @param   Number  g   The green color value
- * @param   Number  b   The blue color value
- * @return  Array       The HSL representation
-]]
-function M.rgbToHsl(r, g, b)
-  local max, min = math.max(r, g, b), math.min(r, g, b)
-  local h, s, l = 0, 0, (max + min) / 2
-
-  if max == min then
-    h, s = 0, 0
-  else
-    local d = max - min
-    if l > 0.5 then s = d / (2 - max - min) else s = d / (max + min) end
-    if max == r then
-      h = (g - b) / d
-      if g < b then h = h + 6 end
-    elseif max == g then
-      h = (b - r) / d + 2
-    elseif max == b then
-      h = (r - g) / d + 4
-    end
-    h = h / 6
-  end
-
-  return h * 360, s * 100, l * 100
-end
-
---[[
- * Converts an HSL color value to RGB. Conversion formula
- * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
- * Assumes h, s, and l are contained in the set [0, 1] and
- * returns r, g, and b in the set [0, 255].
- *
- * @param   Number  h   The hue
- * @param   Number  s   The saturation
- * @param   Number  l   The lightness
- * @return  Array       The RGB representation
-]]
 function M.hslToRgb(h, s, l)
   local r, g, b
   if s == 0 then
@@ -86,13 +27,6 @@ function M.hslToRgb(h, s, l)
   return r * 255, g * 255, b * 255
 end
 
---[[
- * Converts an HSL color value to RGB in Hex representation.
- * @param   Number  h   The hue
- * @param   Number  s   The saturation
- * @param   Number  l   The lightness
- * @return  String      The hex representation
-]]
 function M.hslToHex(h, s, l)
   local r, g, b = M.hslToRgb(h/360, s/100, l/100)
   return string.format("#%02x%02x%02x", r, g, b)

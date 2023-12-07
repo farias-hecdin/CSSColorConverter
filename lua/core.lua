@@ -1,12 +1,15 @@
 local M = {}
+local O = require('options')
 local U = require('utils.utils')
-local plugin_name = "[ColorCommander.nvim]"
+local convert = require('convert')
 local rgb = require("utils.color_rgb")
+local hex = require("utils.color_hex")
 local hsl = require("utils.color_hsl")
 local lch = require("utils.color_lch")
 
--- Check if a file or directory exists in this path
--- Thanks to: https://stackoverflow.com/a/40195356
+local plugin_name = "[ColorCommander.nvim]"
+
+-- Check if a file or directory exists in this path (Thanks to: https://stackoverflow.com/a/40195356)
 local exists = function(file)
   local ok, err, code = os.rename(file, file)
   if not ok then
@@ -77,9 +80,24 @@ M.get_hex_value = function(line_content, virtual_text)
   end
   if "#" == line_content:match("#") then
     res = line_content:match("#[%x][%x][%x][%x][%x][%x]")
+
+    if virtual_text ~= nil then
+      if type(res) ~= 'nil' then
+        local value = M.hex_text(O.options.show_virtual_text_to_hex, res)
+        table.insert(virtual_text, value)
+        res = value
+      end
+    end
   end
 
   return res
+end
+
+function M.hex_text(options, target)
+  if options == 'lch' then
+    local l, c, h = convert.hexToLch(target)
+    return 'lch('..l ..'% ' ..c ..' ' ..h ..')'
+  end
 end
 
 return M

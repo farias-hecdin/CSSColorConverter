@@ -1,5 +1,4 @@
 -- Thanks to: https://stackoverflow.com/a/75850608/22265190
-
 local M = {}
 
 --[[

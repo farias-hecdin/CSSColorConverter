@@ -1,23 +1,19 @@
 local M = {}
-local plugin_name = "[ColorCommander.nvim]"
+local O = require('options')
 local C = require("core")
 local U = require("utils.utils")
 local N = require('utils.nearest_color')
 
-M.options = {
-  show_virtual_text = true,
-  disable_keymaps = false,
-  filetypes = {"css", "scss", "sass"},
-}
+local plugin_name = "[ColorCommander.nvim]"
 
 M.setup = function(options)
   options = options or {}
-  M.options = vim.tbl_deep_extend("keep", options, M.options)
+  O.options = vim.tbl_deep_extend("keep", options, O.options)
   -- Create commands
   vim.api.nvim_create_user_command("ColorToName", M.get_colorname, {})
   vim.api.nvim_create_user_command("ColorNameInstall", C.core, {})
   -- and keymaps
-  if not M.options.disable_keymaps then
+  if not O.options.disable_keymaps then
     vim.api.nvim_set_keymap("n", "<leader>cn", ":ColorToName<CR>", { noremap = true, silent = true })
     -- vim.api.nvim_set_keymap("n", "<leader>ch", ":ColorToHex<CR>", { noremap = true, silent = true })
     -- vim.api.nvim_set_keymap("n", "<leader>cH", ":ColorToHsl<CR>", { noremap = true, silent = true })
@@ -25,17 +21,17 @@ M.setup = function(options)
     -- vim.api.nvim_set_keymap("n", "<leader>cl", ":ColorToLch<CR>", { noremap = true, silent = true })
   end
 
-  if M.options.show_virtual_text then
+  if O.options.show_virtual_text then
     M.virtual_text()
   end
-  return M.options
+  return O.options
 end
 
 M.virtual_text = function()
   M.namespace = vim.api.nvim_create_namespace("color-commander")
   -- Change filtype format from "*.css" to "css"
   local filetypes = {}
-  for _, filetype in ipairs(M.options.filetypes) do
+  for _, filetype in ipairs(O.options.filetypes) do
     table.insert(filetypes, "*" .. filetype)
   end
 
@@ -60,11 +56,13 @@ M.get_colorname = function()
   end
 
   color_names = N.nearest_color(target_hex, color_names)
-  res = color_names.name
-  vim.print(plugin_name .. ' ' .. target_hex .. ' is equal to: ' .. res)
+  if color_names ~= 'nil' then
+    res = color_names.name
+    vim.print(plugin_name .. ' ' .. target_hex .. ' is equal to: ' .. res)
 
-  res = U.transform_text(res)
-  U.paste_at_cursor(res)
+    res = U.transform_text(res)
+    U.paste_at_cursor(res)
+  end
 end
 
 M.get_color_details = function()

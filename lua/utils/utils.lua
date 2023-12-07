@@ -9,6 +9,11 @@ end
 
 -- Modules to export ----------------------------------------------------------
 
+M.round = function(number, decimals)
+  local power = 10 ^ decimals
+  return math.floor(number * power + 0.5) / power
+end
+
 M.convert_color_to_hex = function(line_content, pattern, conversion_function, table_to_insert)
   local x, y, z = line_content:match(pattern)
   local res = nil

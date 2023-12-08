@@ -7,8 +7,7 @@ local N = require('utils.nearest_color')
 local plugin_name = "[ColorCommander.nvim]"
 
 M.setup = function(options)
-  options = options or {}
-  O.options = vim.tbl_deep_extend("keep", options, O.options)
+  O.options = vim.tbl_deep_extend("keep", options or {}, O.options)
   -- Create commands
   vim.api.nvim_create_user_command("ColorToName", M.get_colorname, {})
   vim.api.nvim_create_user_command("ColorNameInstall", C.core, {})

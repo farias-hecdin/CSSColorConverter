@@ -1,4 +1,3 @@
-
 > 📌 Use Google Translate to read this file in your native language.
 
 # ColorCommander.nvim
@@ -35,6 +34,7 @@ Estas son las opciones de configuración predeterminadas:
 ```lua
 require('colorcommander').setup({{
     show_virtual_text = true,
+    show_virtual_text_to_hex = { "lch" },
     disable_keymaps = false,
     filetypes = { "css", "scss", "sass" },
 })
@@ -46,11 +46,13 @@ require('colorcommander').setup({{
 | -------------      | ----------------------------------- |
 | `ColorToName`      | Identifica el nombre de un color a partir de su código (HEX, RGB, HSL o LCH) |
 | `ColorNameInstall` | Descarga la lista de nombres de colores |
+| `ColorPaste`       | Retorna el valor del texto virtual |
 
 Estos son los atajos de teclado predeterminados:
 
 ```lua
 vim.api.nvim_set_keymap("n", "<leader>cn", ":ColorToName<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>cp", ":ColorPaste<CR>", { noremap = true, silent = true })
 ```
 Puedes desactivar los atajos de teclado predeterminados estableciendo `disable_keymaps` en `true`
 
@@ -66,3 +68,4 @@ Puedes desactivar los atajos de teclado predeterminados estableciendo `disable_k
 ## Licencia
 
 ColorCommander.nvim está bajo la licencia MIT. Consulta el archivo `LICENSE` para obtener más información.
+

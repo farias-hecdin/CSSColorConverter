@@ -1,8 +1,9 @@
 local M = {}
-local O = require('options')
-local C = require("core")
-local U = require("utils.utils")
-local N = require('utils.nearest_color')
+local O = require('utils.config')
+local C = require("utils.installation")
+local E = require('utils.extraction')
+local U = require("utils.scripts")
+local N = require('converters.nearest_color')
 
 local plugin_name = "[ColorCommander.nvim]"
 
@@ -10,7 +11,7 @@ M.setup = function(options)
   O.options = vim.tbl_deep_extend("keep", options or {}, O.options)
   -- Create commands
   vim.api.nvim_create_user_command("ColorToName", M.get_colorname, {})
-  vim.api.nvim_create_user_command("ColorNameInstall", C.core, {})
+  vim.api.nvim_create_user_command("ColorNameInstall", C.installation, {})
   vim.api.nvim_create_user_command("ColorPaste", M.get_color, {})
   -- and keymaps
   if not O.options.disable_keymaps then
@@ -51,7 +52,7 @@ M.get_color = function()
   local line = vim.api.nvim_win_get_cursor(0)[1]
   local line_content = vim.api.nvim_buf_get_lines(0, line - 1, line, false)[1]
 
-  local res = C.get_hex_value(line_content, virtual_text)
+  local res = E.get_hex_value(line_content, virtual_text)
   U.paste_at_cursor(false, res)
 end
 
@@ -60,7 +61,7 @@ M.get_colorname = function()
   local line = vim.api.nvim_win_get_cursor(0)[1]
   local line_content = vim.api.nvim_buf_get_lines(0, line - 1, line, false)[1]
 
-  local target_hex = C.get_hex_value(line_content, nil)
+  local target_hex = E.get_hex_value(line_content, nil)
   local res = nil
 
   local color_names = U.read_json() or nil
@@ -84,7 +85,7 @@ M.get_color_details = function()
   -- Get current line content
   local line = vim.api.nvim_win_get_cursor(0)[1]
   local line_content = vim.api.nvim_buf_get_lines(0, line - 1, line, false)[1]
-  C.get_hex_value(line_content, virtual_text)
+  E.get_hex_value(line_content, virtual_text)
 
   -- Check if an extmark already exists
   local extmark = vim.api.nvim_buf_get_extmark_by_id(0, M.namespace, M.namespace, {})

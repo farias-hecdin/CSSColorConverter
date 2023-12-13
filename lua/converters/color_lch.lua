@@ -1,4 +1,3 @@
--- Thanks to: https://stackoverflow.com/a/75850608/22265190
 local M = {}
 
 --[[
@@ -7,6 +6,7 @@ local M = {}
  * @param  c   Chroma value (0-100)
  * @param  h   Hue value (0-360)
  * @return     Hexadecimal color code (#rrggbb)
+ * Thanks to: https://stackoverflow.com/a/75850608/22265190
 ]]
 function M.lchToHex(l, c, h)
   local a = math.floor(c * math.cos(math.rad(h)) + 0.5)

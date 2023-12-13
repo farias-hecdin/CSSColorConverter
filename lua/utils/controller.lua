@@ -1,7 +1,7 @@
 local M = {}
-local hex = require("utils.color_hex")
-local rgb = require("utils.color_rgb")
-local other = require('utils.color_xyz_and_lab')
+local hex = require("converters.color_hex")
+local rgb = require("converters.color_rgb")
+local other = require('converters.color_xyz_and_lab')
 
 function M.hexToLch(target)
   local a, b, c = hex.hexToRgb(target)

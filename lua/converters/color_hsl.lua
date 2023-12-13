@@ -32,7 +32,6 @@ function M.hslToHex(h, s, l)
   return string.format("#%02x%02x%02x", r, g, b)
 end
 
---
 -- function M.replaceHexWithHSL()
 --   local line_number = vim.api.nvim_win_get_cursor(0)[1]
 --   local line_content = vim.api.nvim_buf_get_lines(0, line_number - 1, line_number, false)[1]

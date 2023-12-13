@@ -1,5 +1,5 @@
 local M = {}
-local rgb = require("utils.color_rgb")
+local rgb = require("converters.color_rgb")
 
 function M.hexToRgb(hex)
   hex = hex:gsub("#","")

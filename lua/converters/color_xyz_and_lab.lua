@@ -1,5 +1,5 @@
 local M = {}
-local U = require("utils.utils")
+local U = require("utils.scripts")
 
 function M.xyzToLab(x, y, z)
   local D65 = {95.047, 100, 108.883}

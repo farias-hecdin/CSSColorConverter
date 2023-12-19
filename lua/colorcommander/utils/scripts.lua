@@ -8,8 +8,6 @@ local function read_file(file)
   return data
 end
 
--- Modules to export ----------------------------------------------------------
-
 M.round = function(number, decimals)
   local power = 10 ^ decimals
   return math.floor(number * power + 0.5) / power

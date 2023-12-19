@@ -15,7 +15,6 @@ end
 
 -- Check if a directory exists in this path
 local is_dir = function(path)
-  -- "/" works on both Unix and Windows
   return exists(path)
 end
 

@@ -48,13 +48,12 @@ M.virtual_text = function()
 end
 
 M.get_color = function(mode)
-  vim.print(mode)
   local virtual_text = {}
+  local res = nil
   -- Get current line content
   local line = vim.api.nvim_win_get_cursor(0)[1]
   local line_content = vim.api.nvim_buf_get_lines(0, line - 1, line, false)[1]
   -- Paste the hex value at the cursor position
-  local res = nil
   if mode == 'rgb' or mode == 'hsl' or mode == 'lch' then
     res = EXT.get_hex_value(line_content, nil)
     res = EXT.hex_to(mode, res)

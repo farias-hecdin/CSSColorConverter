@@ -34,7 +34,7 @@ Estas son las opciones de configuración predeterminadas:
 ```lua
 require('colorcommander').setup({{
     show_virtual_text = true,
-    show_virtual_text_to_hex = { "lch" },
+    show_virtual_text_to_hex = "lch",
     disable_keymaps = false,
     filetypes = { "css", "scss", "sass" },
 })

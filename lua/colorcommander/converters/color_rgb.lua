@@ -1,7 +1,7 @@
 local M = {}
-local U = require("utils.scripts")
+local U = require("colorcommander.utils.scripts")
 
-function M.rgbToHex(r, g, b)
+M.rgbToHex = function(r, g, b)
   local function hexToString(number)
     local chars = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"}
     local low = number % 16
@@ -13,7 +13,7 @@ function M.rgbToHex(r, g, b)
 end
 
 -- Thanks to: https://github.com/EmmanuelOga/columns/blob/master/utils/color.lua
-function M.rgbToHsl(r, g, b)
+M.rgbToHsl = function(r, g, b)
   r, g, b = r / 255, g / 255, b / 255
   local max, min = math.max(r, g, b), math.min(r, g, b)
   local h, s, l
@@ -36,7 +36,7 @@ function M.rgbToHsl(r, g, b)
   return U.round((h * 360), 0), U.round((s * 100), 0), U.round((l * 100), 0)
 end
 
-function M.rgbToXyz(r, g, b)
+M.rgbToXyz = function(r, g, b)
   local r = (r / 255)
   local g = (g / 255)
   local b = (b / 255)

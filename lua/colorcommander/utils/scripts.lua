@@ -1,6 +1,7 @@
 local M = {}
+local vim = vim
 
-local read_file = function(file)
+local function read_file(file)
   local fd = assert(io.open(file, "r"))
   local data = fd:read("*a")
   fd:close()

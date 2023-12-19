@@ -1,7 +1,7 @@
 local M = {}
-local U = require("utils.scripts")
+local U = require("colorcommander.utils.scripts")
 
-function M.xyzToLab(x, y, z)
+M.xyzToLab = function(x, y, z)
   local D65 = {95.047, 100, 108.883}
 
   local xn = x / D65[1]
@@ -23,9 +23,9 @@ function M.xyzToLab(x, y, z)
   return l, a, b
 end
 
-function M.labToLch(l, a, b)
+M.labToLch = function(l, a, b)
   local c = math.sqrt(a^2 + b^2)
-  local h = math.deg(math.atan2(b, a))
+  local h = math.deg(math.atan(b, a))
 
   if h < 0 then
     h = h + 360

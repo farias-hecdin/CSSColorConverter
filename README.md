@@ -33,10 +33,10 @@ Estas son las opciones de configuración predeterminadas:
 
 ```lua
 require('colorcommander').setup({{
-    show_virtual_text = true,
-    show_virtual_text_to_hex = "lch",
-    disable_keymaps = false,
-    filetypes = { "css", "scss", "sass" },
+    show_virtual_text = true, -- Mostrar el texto virtual
+    show_virtual_text_to_hex = "lch", -- Texto virtual para colores Hex ('lch', 'rgb' or 'hsl')
+    disable_keymaps = false, -- Desabihilitar los atajos de teclado
+    filetypes = { "css", "scss", "sass" }, -- Archivos admitidos
 })
 ```
 
@@ -53,7 +53,11 @@ Estos son los atajos de teclado predeterminados:
 ```lua
 vim.api.nvim_set_keymap("n", "<leader>cn", ":ColorToName<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>cp", ":ColorPaste<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>ch", ":ColorToHsl<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>cl", ":ColorToLch<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>cr", ":ColorToRgb<CR>", { noremap = true, silent = true })
 ```
+
 Puedes desactivar los atajos de teclado predeterminados estableciendo `disable_keymaps` en `true`
 
 ## Agradecimientos a
@@ -68,4 +72,3 @@ Puedes desactivar los atajos de teclado predeterminados estableciendo `disable_k
 ## Licencia
 
 ColorCommander.nvim está bajo la licencia MIT. Consulta el archivo `LICENSE` para obtener más información.
-

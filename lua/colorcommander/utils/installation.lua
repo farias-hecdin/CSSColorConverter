@@ -1,7 +1,8 @@
 local M = {}
+local vim = vim
 
 -- Check if a file or directory exists in this path (Thanks to: https://stackoverflow.com/a/40195356)
-local exists = function(file)
+local function exists(file)
   local ok, err, code = os.rename(file, file)
   if not ok then
     if code == 13 then
@@ -38,8 +39,6 @@ local download_file = function(url, file)
     end,
   }):start()
 end
-
--- Modules to export ----------------------------------------------------------
 
 M.installation = function()
   local path, dirname = vim.fn.expand('~/.local/share/nvim/'), "colorcommander"

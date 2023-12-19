@@ -1,7 +1,7 @@
 -- Thanks to: https://github.com/EmmanuelOga/columns/blob/master/utils/color.lua
 local M = {}
 
-function M.hslToRgb(h, s, l)
+M.hslToRgb = function(h, s, l)
   local r, g, b
   if s == 0 then
     r, g, b = l, l, l
@@ -27,7 +27,7 @@ function M.hslToRgb(h, s, l)
   return r * 255, g * 255, b * 255
 end
 
-function M.hslToHex(h, s, l)
+M.hslToHex = function(h, s, l)
   local r, g, b = M.hslToRgb(h/360, s/100, l/100)
   return string.format("#%02x%02x%02x", r, g, b)
 end

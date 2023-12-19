@@ -8,7 +8,7 @@ local M = {}
  * @return     Hexadecimal color code (#rrggbb)
  * Thanks to: https://stackoverflow.com/a/75850608/22265190
 ]]
-function M.lchToHex(l, c, h)
+M.lchToHex = function(l, c, h)
   local a = math.floor(c * math.cos(math.rad(h)) + 0.5)
   local b = math.floor(c * math.sin(math.rad(h)) + 0.5)
 

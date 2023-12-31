@@ -24,7 +24,7 @@ M.get_hex_value = function(line_content, virtual_text)
     res = line_content:match("#[%x][%x][%x][%x][%x][%x]")
     -- If virtual text is provided, convert the hexadecimal color to another format
     if virtual_text ~= nil then
-      local value = M.hex_to(O.options.show_virtual_text_to_hex, res)
+      local value = M.hex_to(O.options.virtual_text_to_hex, res)
       table.insert(virtual_text, value)
       res = value
     end

@@ -40,16 +40,17 @@ M.hex_to = function(options, target)
   if options == 'lch' then
     local l, c, h = CNT.hexToLch(target)
     return 'lch('..l ..'% ' ..c ..' ' ..h ..')'
-    -- If the target format is HSL
+  -- If the target format is HSL
   elseif options == 'hsl' then
     local h, s, l = CNT.hexToHsl(target)
     return 'hsl(' ..h ..', ' ..s ..'%, ' ..l ..'%)'
-    -- If the target format is RGB
+  -- If the target format is RGB
   elseif options == 'rgb' then
     local r, g, b = CNT.hexToRgb(target)
     return 'rgb(' ..r ..', ' ..g ..', ' ..b ..')'
+  -- If the target format is HEX
   else
-    return
+    return target
   end
 end
 

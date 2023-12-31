@@ -12,8 +12,9 @@ M.setup = function(options)
   -- Create user commands
   vim.api.nvim_create_user_command("ColorToName", M.get_colorname, {})
   vim.api.nvim_create_user_command("ColorNameInstall", INS.installation, {})
-  vim.api.nvim_create_user_command("ColorPaste", M.get_color, {})
+  vim.api.nvim_create_user_command("ColorPaste", function() M.get_color(false, {}) end, {})
   vim.api.nvim_create_user_command("ColorToHsl", function() M.get_color('hsl') end, {})
+  vim.api.nvim_create_user_command("ColorToHex", function() M.get_color('hex') end, {})
   vim.api.nvim_create_user_command("ColorToLch", function() M.get_color('lch') end, {})
   vim.api.nvim_create_user_command("ColorToRgb", function() M.get_color('rgb') end, {})
   -- Create keymaps
@@ -21,6 +22,7 @@ M.setup = function(options)
     vim.api.nvim_set_keymap("n", "<leader>cn", ":ColorToName<CR>", { noremap = true, silent = true })
     vim.api.nvim_set_keymap("n", "<leader>cp", ":ColorPaste<CR>", { noremap = true, silent = true })
     vim.api.nvim_set_keymap("n", "<leader>ch", ":ColorToHsl<CR>", { noremap = true, silent = true })
+    vim.api.nvim_set_keymap("n", "<leader>cH", ":ColorToHex<CR>", { noremap = true, silent = true })
     vim.api.nvim_set_keymap("n", "<leader>cl", ":ColorToLch<CR>", { noremap = true, silent = true })
     vim.api.nvim_set_keymap("n", "<leader>cr", ":ColorToRgb<CR>", { noremap = true, silent = true })
   end
@@ -47,41 +49,36 @@ M.virtual_text = function()
   })
 end
 
-M.get_color = function(mode)
-  local virtual_text = {}
-  local res = nil
+M.get_color = function(mode, virtual_text)
   -- Get current line content
   local line = vim.api.nvim_win_get_cursor(0)[1]
   local line_content = vim.api.nvim_buf_get_lines(0, line - 1, line, false)[1]
   -- Paste the hex value at the cursor position
-  if mode == 'rgb' or mode == 'hsl' or mode == 'lch' then
-    res = EXT.get_hex_value(line_content, nil)
+  local res = EXT.get_hex_value(line_content, virtual_text)
+  if mode and res then
     res = EXT.hex_to(mode, res)
-  else
-    res = EXT.get_hex_value(line_content, virtual_text)
   end
   SCR.paste_at_cursor(false, res)
 end
 
 M.get_colorname = function()
-  local res = nil
   -- Get current line content
   local line = vim.api.nvim_win_get_cursor(0)[1]
   local line_content = vim.api.nvim_buf_get_lines(0, line - 1, line, false)[1]
   -- Read the JSON file containing the color names
-  local color_names = SCR.read_json() or nil
-  if not color_names then
-    vim.print('Error!')
+  local color_names = {}
+  local ok, data = pcall(SCR.read_json)
+  if not ok then vim.print('Error!')
     return
   end
+  color_names = data or {}
   -- Find the nearest color name to the target hex value
   local target_hex = EXT.get_hex_value(line_content, nil)
   color_names = NEA.nearest_color(target_hex, color_names)
   if color_names ~= 'nil' then
-    res = color_names.name
-    vim.print('[ColorCommander.nvim] ' .. target_hex .. ' is equal to: ' .. res)
+    local res = SCR.transform_text(color_names.name)
+    vim.print('[ColorCommander.nvim] ' .. target_hex .. ' is equal to: ' .. color_names.name)
     -- Transform the color name and paste at the cursor position
-    res = SCR.transform_text(res)
     SCR.paste_at_cursor(true, res)
   end
 end

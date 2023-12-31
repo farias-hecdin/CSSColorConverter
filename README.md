@@ -1,4 +1,5 @@
-> 📌 Use Google Translate to read this file in your native language.
+> [!TIP]
+> Use `Google Translate` to read this file in your native language.
 
 # ColorCommander.nvim
 

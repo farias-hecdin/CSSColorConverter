@@ -1,3 +1,5 @@
+local vLog = require("colorcommander.log").info
+
 local M = {}
 local vim = vim
 
@@ -13,17 +15,22 @@ M.round = function(number, decimals)
   return math.floor(number * power + 0.5) / power
 end
 
-M.convert_color_to_hex = function(line_content, pattern, conversion_function, table_to_insert)
-  local x, y, z = line_content:match(pattern)
-  local res = nil
+-- !---------------------------------------------------------------------------:
 
-  if x and y and z then
-    x, y, z = tonumber(x), tonumber(y), tonumber(z)
-    res = conversion_function(x, y, z)
-    if table_to_insert ~= nil then
-      table.insert(table_to_insert, res)
+M.convert_color_to_hex = function(line_content, pattern, conversion_function, table_to_insert)
+  local res = nil
+  local a, b, c
+
+  for x, y, z in string.gmatch(line_content, pattern) do
+    if x and y and z then
+      a, b, c = tonumber(x), tonumber(y), tonumber(z)
+      res = conversion_function(a, b, c)
+      if table_to_insert ~= nil then
+        table.insert(table_to_insert, res)
+      end
     end
   end
+  vLog(table_to_insert)
   return res
 end
 

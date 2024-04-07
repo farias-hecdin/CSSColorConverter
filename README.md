@@ -34,8 +34,8 @@ Estas son las opciones de configuración predeterminadas:
 
 ```lua
 require('colorcommander').setup({{
-    show_virtual_text = true, -- <boolean> Mostrar el texto virtual.
-    virtual_text_to_hex = "lch", -- <string> Texto virtual para los colores hex ('rgb', 'hsl' o 'lch').
+    display_virtual_text = true, -- <boolean> Mostrar el texto virtual.
+    target_color_format = "lch", -- <string> Texto virtual para los colores ('rgb', 'hsl' o 'lch').
     disable_keymaps = false, -- <boolean> Desabihilitar los atajos de teclado.
     filetypes = { "css", "scss", "sass" }, -- <table> Archivos admitidos.
 })
@@ -58,7 +58,7 @@ Estos son los atajos de teclado predeterminados:
 ```lua
 vim.api.nvim_set_keymap("n", "<leader>cn", ":ColorToName<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>cp", ":ColorPaste<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>ch", ":ColorToHex<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>c#", ":ColorToHex<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>cr", ":ColorToRgb<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>ch", ":ColorToHsl<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>cl", ":ColorToLch<CR>", { noremap = true, silent = true })

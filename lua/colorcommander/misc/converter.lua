@@ -15,9 +15,11 @@ M.color_value = function(line_content, virtual_text, mode)
     { key = "#", pattern = "#[%x][%x][%x][%x][%x][%x]", value = "" }
   }
 
+  local send_to_virtual_text = virtual_text or {}
   local target_format = mode or string.lower(CC_config.options.target_color_format)
 
   local result = {}
+  local initial_value = {}
   for _, format in ipairs(color_formats) do
     local matches = string.gmatch(line_content, format.pattern)
 
@@ -91,16 +93,17 @@ M.color_value = function(line_content, virtual_text, mode)
           result[#result + 1] = input
         end
       end
+      initial_value[#initial_value + 1] = input
     end
   end
 
   if not mode then
     for i = 1, #result do
-      table.insert(virtual_text, result[i])
+      table.insert(send_to_virtual_text, result[i])
     end
   end
 
-  return result
+  return result, initial_value
 end
 
 return M

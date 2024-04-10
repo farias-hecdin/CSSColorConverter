@@ -41,27 +41,26 @@ require('colorcommander').setup({{
 })
 ```
 
-### Comandos y atajos de teclado
+### Funciones y atajos de teclado
 
-| Comandos           | Descripción                         |
-| -------------      | ----------------------------------- |
-| `ColorNameInstall` | Descargar la lista de nombres de colores |
-| `ColorToName`      | Identificar el nombre del color |
-| `ColorPaste`       | Retornar el valor del texto virtual |
-| `ColorToHex`       | Convertir el color a `hex` |
-| `ColorToRgb`       | Convertir el color a `rgb` |
-| `ColorToHsl`       | Convertir el color a `hsl` |
-| `ColorToLch`       | Convertir el color a `lch` |
+| API                           | Descripción                         |
+| ----------------------------- | ----------------------------------- |
+| `get_color_name()`            | Identificar el nombre del color |
+| `get_color_conversion('hex')` | Convertir el color a `hex` |
+| `get_color_conversion('rgb')` | Convertir el color a `rgb` |
+| `get_color_conversion('hsl')` | Convertir el color a `hsl` |
+| `get_color_conversion('lch')` | Convertir el color a `lch` |
 
 Estos son los atajos de teclado predeterminados:
 
 ```lua
-vim.api.nvim_set_keymap("n", "<leader>cn", ":ColorToName<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>cp", ":ColorPaste<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>c#", ":ColorToHex<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>cr", ":ColorToRgb<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>ch", ":ColorToHsl<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>cl", ":ColorToLch<CR>", { noremap = true, silent = true })
+local keymaps_opts = {buffer = 0, silent = true}
+
+vim.keymap.set('v', '<leader>cn', ":lua require('colorcommander').get_color_name()<CR>", keymaps_opts)
+vim.keymap.set('v', '<leader>c#', ":lua require('colorcommander').get_color_conversion('hex')<CR>", keymaps_opts)
+vim.keymap.set('v', '<leader>ch', ":lua require('colorcommander').get_color_conversion('hsl')<CR>", keymaps_opts)
+vim.keymap.set('v', '<leader>cl', ":lua require('colorcommander').get_color_conversion('lch')<CR>", keymaps_opts)
+vim.keymap.set('v', '<leader>cr', ":lua require('colorcommander').get_color_conversion('rgb')<CR>", keymaps_opts)
 ```
 
 Puedes desactivar los atajos de teclado predeterminados estableciendo `disable_keymaps` en `true`

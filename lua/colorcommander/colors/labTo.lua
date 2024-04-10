@@ -1,5 +1,5 @@
 local M = {}
-local U = require("colorcommander.misc.utils")
+local utils = require("colorcommander.misc.utils")
 
 M.to_lch = function(l, a, b)
   local c = math.sqrt(a^2 + b^2)
@@ -8,7 +8,7 @@ M.to_lch = function(l, a, b)
   if h < 0 then
     h = h + 360
   end
-  return U.round(l, 2), U.round(c, 2), U.round(h, 2)
+  return utils.round(l, 2), utils.round(c, 2), utils.round(h, 2)
 end
 
 return M

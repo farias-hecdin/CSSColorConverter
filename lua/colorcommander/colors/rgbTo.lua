@@ -1,5 +1,5 @@
 local M = {}
-local U = require("colorcommander.misc.utils")
+local utils = require("colorcommander.misc.utils")
 
 -- Thanks to: https://github.com/EmmanuelOga/columns/blob/master/utils/color.lua
 M.to_hsl = function(r, g, b)
@@ -21,7 +21,7 @@ M.to_hsl = function(r, g, b)
     end
     h = h / 6
   end
-  return U.round((h * 360), 0), U.round((s * 100), 0), U.round((l * 100), 0)
+  return utils.round((h * 360), 0), utils.round((s * 100), 0), utils.round((l * 100), 0)
 end
 
 M.to_hex = function(r, g, b)

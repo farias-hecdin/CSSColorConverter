@@ -1,6 +1,6 @@
-local vLog = require("colorcommander.log").info
-
 local M = {}
+local CC_buffer = require("colorcommander.misc.buffer_helpers")
+local CC_nearest_color = require('colorcommander.colors.nearest')
 local vim = vim
 
 local function read_file(file)
@@ -22,21 +22,23 @@ end
 
 M.transform_text = function(input)
   local result = string.lower(input)
-  -- Reemplazar espacios y símbolos con guiones
+  -- Replace spaces and symbols with hyphens
   result = string.gsub(result, "['’]", "")
   return string.gsub(result, "%W", "-")
 end
 
-M.paste_at_cursor = function(ask, value)
-  local result = 'y'
-  if ask == true then
-    result = vim.api.nvim_eval("input('[ColorCommander.nvim] Would you like to paste the color name? [y]es [n]o: ')")
-  end
-
-  if result == "y" then
-    for elem in value do
-    vim.cmd("normal! i" .. elem)
-    vim.print('[ColorCommander.nvim] Paste: ' .. elem)
+M.update_color = function(initial, select_text, result, pos_text, useColorName)
+  for i = 1, #initial do
+    if select_text and initial[i] == select_text[1] then
+      if useColorName then
+        local color_names = CC_nearest_color.nearest_color(result[i], useColorName)
+        select_text[1] = M.transform_text(color_names.name)
+        vim.print(string.format("[ColorCommander.nvim] %s is equal to: %s", result[i], color_names.name))
+      else
+        select_text[1] = result[i]
+        vim.print(string.format("[ColorCommander.nvim] %s is equal to: %s", initial[i], result[i]))
+      end
+      CC_buffer.change_text(pos_text, select_text)
     end
   end
 end

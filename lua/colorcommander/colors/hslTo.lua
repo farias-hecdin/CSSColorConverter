@@ -1,5 +1,6 @@
--- Thanks to: https://github.com/EmmanuelOga/columns/blob/master/utils/color.lua
 local M = {}
+
+-- Thanks to: https://github.com/EmmanuelOga/columns/blob/master/utils/color.lua
 
 M.to_rgb = function(h, s, l)
   local r, g, b
@@ -31,17 +32,5 @@ M.to_hex = function(h, s, l)
   local r, g, b = M.to_rgb(h/360, s/100, l/100)
   return string.format("#%02x%02x%02x", r, g, b)
 end
-
--- function M.replaceHexWithHSL()
---   local line_number = vim.api.nvim_win_get_cursor(0)[1]
---   local line_content = vim.api.nvim_buf_get_lines(0, line_number - 1, line_number, false)[1]
---
---   for hex in line_content:gmatch("#[0-9a-fA-F]+") do
---     local hsl = M.hexToHSL(hex)
---     line_content = line_content:gsub(hex, hsl)
---   end
---
---   vim.api.nvim_buf_set_lines(0, line_number - 1, line_number, false, { line_content })
--- end
 
 return M

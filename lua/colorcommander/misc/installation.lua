@@ -1,43 +1,35 @@
 local M = {}
 local vim = vim
 
--- Check if a file or directory exists in this path (Thanks to: https://stackoverflow.com/a/40195356)
-local function dir_exists(fdir)
-  local ok, err = os.rename(fdir, fdir)
-  if not ok then
-    return false, err
-  end
-  return true
-end
-
+-- Thanks to: https://www.reddit.com/r/neovim/comments/pa4yle/help_with_async_in_lua/
 local download_file = function(url, file)
-  -- Thanks to: https://www.reddit.com/r/neovim/comments/pa4yle/help_with_async_in_lua/
-  local job = require('plenary.job')
+  local plenary = require('plenary')
 
-  job:new({
+  plenary.job:new({
     command = 'curl',
-    args = { url, '-s', '-o', file },
-    on_start = function()
-      vim.print('[ColorCommander.nvim] Downloading colornames.json...')
-    end,
+    args = { '-s', url, '-o', file },
+    on_start = function() vim.print('[ColorCommander.nvim] Downloading colornames.json...') end,
     on_exit = function(j, exit_code)
-      local type = "[ColorCommander.nvim] Success!"
-      if exit_code ~=0 then
-        type = "[ColorCommander.nvim] Error!"
+      local status = "[ColorCommander.nvim] Success!"
+      if exit_code ~= 0 then
+        status = "[ColorCommander.nvim] Error!"
       end
-      vim.print(type)
+      vim.notify(status, vim.log.levels.INFO)
     end,
   }):start()
 end
 
-M.installation = function()
-  local path, filename = vim.fn.expand('~/.local/share/nvim/colorcommander/'), "colornames.json"
+M.check_if_colornames_exist = function()
+  local install_path, filename = vim.fn.stdpath('data') .. '/colorcommander/', "colornames.json"
   -- Check if a directory exists in this path
-  if not dir_exists(path) then
-    os.execute("mkdir -p " .. path)
-    download_file("https://unpkg.com/color-name-list@10.16.0/dist/colornames.json", path .. filename)
-  else
-    vim.print('[ColorCommander.nvim] The colorname.json file has been downloaded.')
+  if vim.fn.isdirectory(install_path) ~= 1 then
+    vim.fn.mkdir(install_path, 'p')
+  end
+  -- Check if the file exists in the install path
+  if vim.fn.filereadable(install_path .. filename) ~= 1 then
+    download_file("https://unpkg.com/color-name-list@10.16.0/dist/colornames.json", install_path .. filename)
+    local message = '[ColorCommander.nvim] The colorname.json file has been downloaded.'
+    vim.notify(message, vim.log.levels.INFO)
   end
 end
 

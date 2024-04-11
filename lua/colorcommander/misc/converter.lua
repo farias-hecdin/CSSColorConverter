@@ -77,17 +77,20 @@ M.color_value = function(line_content, virtual_text, mode)
       elseif target_format == "lch" then
         if current_format == "#" then
           n1, n2, n3 = hex.to_rgb(input)
-          n1, n2, n3 = lab.to_lch(xyz.to_lab(rgb.to_xyz(n1, n2, n3)))
-            result[#result + 1] = string.format('lch(%d%, %d, %d)', n1, n2, n3)
+          n1, n2, n3 = rgb.to_xyz(n1, n2, n3)
+          n1, n2, n3 = xyz.to_lab(n1, n2, n3)
+          n1, n2, n3 = lab.to_lch(n1, n2, n3)
+          -- n1, n2, n3 = lab.to_lch(xyz.to_lab(rgb.to_xyz(n1, n2, n3)))
+            result[#result + 1] = string.format('lch(%d%% %d %d)', n1, n2, n3)
         elseif current_format == "rgb" then
           for x, y, z in string.gmatch(input, format.value) do
             n1, n2, n3 = lab.to_lch(xyz.to_lab(rgb.to_xyz(tonumber(x), tonumber(y), tonumber(z))))
-            result[#result + 1] = string.format('lch(%d%, %d, %d)', n1, n2, n3)
+            result[#result + 1] = string.format('lch(%d%% %d %d)', n1, n2, n3)
           end
         elseif current_format == "hsl" then
           for x, y, z in string.gmatch(input, format.value) do
             n1, n2, n3 = lab.to_lch(xyz.to_lab(rgb.to_xyz(hex.to_rgb(hsl.to_hex(tonumber(x), tonumber(y), tonumber(z))))))
-            result[#result + 1] = string.format('lch(%d%, %d, %d)', n1, n2, n3)
+            result[#result + 1] = string.format('lch(%d%% %d %d)', n1, n2, n3)
           end
         else
           result[#result + 1] = input

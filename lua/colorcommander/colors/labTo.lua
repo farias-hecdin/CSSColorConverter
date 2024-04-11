@@ -2,13 +2,12 @@ local M = {}
 local utils = require("colorcommander.misc.utils")
 
 M.to_lch = function(l, a, b)
-  local c = math.sqrt(a^2 + b^2)
-  local h = math.deg(math.atan(b, a))
+    local c = math.sqrt(a*a + b*b)
+    local h = math.atan2(b, a)
+    if h < 0 then h = h + 2*math.pi end
+    h = h * 180 / math.pi
 
-  if h < 0 then
-    h = h + 360
-  end
-  return utils.round(l, 2), utils.round(c, 2), utils.round(h, 2)
+    return l, c, h
 end
 
 return M

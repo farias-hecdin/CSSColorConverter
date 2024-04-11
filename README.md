@@ -35,7 +35,7 @@ Estas son las opciones de configuración predeterminadas:
 ```lua
 require('colorcommander').setup({{
     display_virtual_text = true, -- <boolean> Mostrar el texto virtual.
-    target_color_format = "lch", -- <string> Texto virtual para los colores ('rgb', 'hsl' o 'lch').
+    target_color_format = "lch", -- <string> Formato del color del texto virtual ('rgb', 'hsl', 'lch' o 'hex').
     disable_keymaps = false, -- <boolean> Desabihilitar los atajos de teclado.
     filetypes = { "css", "scss", "sass" }, -- <table> Archivos admitidos.
 })

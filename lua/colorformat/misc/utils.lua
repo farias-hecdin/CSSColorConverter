@@ -1,6 +1,6 @@
 local M = {}
-local CC_buffer = require("colorcommander.misc.buffer_helpers")
-local CC_nearest_color = require('colorcommander.colors.nearest')
+local CC_buffer = require("colorformat.misc.buffer_helpers")
+local CC_nearest_color = require('colorformat.colors.nearest')
 local vim = vim
 
 local function read_file(file)
@@ -16,7 +16,7 @@ M.round = function(number, decimals)
 end
 
 M.read_json = function()
-  local fd = read_file(vim.fn.expand('~/.local/share/nvim/colorcommander/colornames.json'))
+  local fd = read_file(vim.fn.expand('~/.local/share/nvim/colorformat/colornames.json'))
   return vim.json.decode(fd)
 end
 
@@ -33,10 +33,10 @@ M.update_color = function(initial, select_text, result, pos_text, useColorName)
       if useColorName then
         local color_names = CC_nearest_color.nearest_color(result[i], useColorName)
         select_text[1] = M.transform_text(color_names.name)
-        vim.print(string.format("[ColorCommander.nvim] %s is equal to: %s", result[i], color_names.name))
+        vim.print(string.format("[Colorformat.nvim] %s is equal to: %s", result[i], color_names.name))
       else
         select_text[1] = result[i]
-        vim.print(string.format("[ColorCommander.nvim] %s is equal to: %s", initial[i], result[i]))
+        vim.print(string.format("[Colorformat.nvim] %s is equal to: %s", initial[i], result[i]))
       end
       CC_buffer.change_text(pos_text, select_text)
     end

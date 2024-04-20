@@ -1,9 +1,9 @@
 local M = {}
-local CC_config = require('colorcommander.misc.config')
-local CC_install = require("colorcommander.misc.installation")
-local CC_converter = require('colorcommander.misc.converter')
-local CC_utils = require("colorcommander.misc.utils")
-local CC_buffer = require("colorcommander.misc.buffer_helpers")
+local CC_config = require('colorformat.misc.config')
+local CC_install = require("colorformat.misc.installation")
+local CC_converter = require('colorformat.misc.converter')
+local CC_utils = require("colorformat.misc.utils")
+local CC_buffer = require("colorformat.misc.buffer_helpers")
 local vim = vim
 
 M.setup = function(options)
@@ -15,14 +15,14 @@ M.setup = function(options)
     local filetypes = CC_config.options.filetypes or 'css'
     -- Create the keymaps for the specified filetypes
     vim.api.nvim_create_autocmd('FileType', {
-      desc = 'colorcommander.nvim keymaps',
+      desc = 'colorformat.nvim keymaps',
       pattern = filetypes,
       callback = function()
-        vim.keymap.set('v', '<leader>cn', ":lua require('colorcommander').get_color_name()<CR>", keymaps_opts)
-        vim.keymap.set('v', '<leader>c#', ":lua require('colorcommander').get_color_conversion('hex')<CR>", keymaps_opts)
-        vim.keymap.set('v', '<leader>ch', ":lua require('colorcommander').get_color_conversion('hsl')<CR>", keymaps_opts)
-        vim.keymap.set('v', '<leader>cl', ":lua require('colorcommander').get_color_conversion('lch')<CR>", keymaps_opts)
-        vim.keymap.set('v', '<leader>cr', ":lua require('colorcommander').get_color_conversion('rgb')<CR>", keymaps_opts)
+        vim.keymap.set('v', '<leader>cn', ":lua require('colorformat').get_color_name()<CR>", keymaps_opts)
+        vim.keymap.set('v', '<leader>c#', ":lua require('colorformat').get_color_conversion('hex')<CR>", keymaps_opts)
+        vim.keymap.set('v', '<leader>ch', ":lua require('colorformat').get_color_conversion('hsl')<CR>", keymaps_opts)
+        vim.keymap.set('v', '<leader>cl', ":lua require('colorformat').get_color_conversion('lch')<CR>", keymaps_opts)
+        vim.keymap.set('v', '<leader>cr', ":lua require('colorformat').get_color_conversion('rgb')<CR>", keymaps_opts)
       end,
     })
   end

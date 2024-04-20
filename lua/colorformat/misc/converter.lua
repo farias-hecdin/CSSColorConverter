@@ -1,11 +1,11 @@
 local M = {}
-local CC_config = require('colorcommander.misc.config')
-local rgb = require("colorcommander.colors.rgbTo")
-local hex = require("colorcommander.colors.hexTo")
-local xyz = require("colorcommander.colors.xyzTo")
-local lab = require("colorcommander.colors.labTo")
-local hsl = require("colorcommander.colors.hslTo")
-local lch = require("colorcommander.colors.lchTo")
+local CC_config = require('colorformat.misc.config')
+local rgb = require("colorformat.colors.rgbTo")
+local hex = require("colorformat.colors.hexTo")
+local xyz = require("colorformat.colors.xyzTo")
+local lab = require("colorformat.colors.labTo")
+local hsl = require("colorformat.colors.hslTo")
+local lch = require("colorformat.colors.lchTo")
 
 M.color_value = function(line_content, virtual_text, mode)
   local color_formats = {

@@ -1,5 +1,5 @@
 local M = {}
-local utils = require("colorcommander.misc.utils")
+local utils = require("colorformat.misc.utils")
 
 -- Thanks to: https://github.com/EmmanuelOga/columns/blob/master/utils/color.lua
 M.to_hsl = function(r, g, b)

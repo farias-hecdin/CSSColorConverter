@@ -1,6 +1,5 @@
-local M = {}
-
 -- Thanks to: https://github.com/EmmanuelOga/columns/blob/master/utils/color.lua
+local M = {}
 
 M.to_rgb = function(h, s, l)
   local r, g, b

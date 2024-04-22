@@ -1,10 +1,9 @@
+-- Thanks to: https://stackoverflow.com/a/75850608/22265190
 local M = {}
 
--- Thanks to: https://stackoverflow.com/a/75850608/22265190
 M.to_hex = function(l, c, h)
   local a = math.floor(c * math.cos(math.rad(h)) + 0.5)
   local b = math.floor(c * math.sin(math.rad(h)) + 0.5)
-
   -- Reference white values for CIE 1964 10° Standard Observer
   local xw, yw, zw = 0.948110, 1.00000, 1.07304
   -- Compute intermediate values

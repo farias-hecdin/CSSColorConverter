@@ -1,5 +1,5 @@
 local M = {}
-local CC_config = require('colorformat.misc.config')
+local config = require('colorformat.misc.config')
 local rgb = require("colorformat.colors.rgbTo")
 local hex = require("colorformat.colors.hexTo")
 local xyz = require("colorformat.colors.xyzTo")
@@ -16,7 +16,7 @@ M.color_value = function(line_content, virtual_text, mode)
   }
 
   local send_to_virtual_text = virtual_text or {}
-  local target_format = mode or string.lower(CC_config.options.target_color_format)
+  local target_format = mode or string.lower(config.options.target_color_format)
 
   local result = {}
   local initial_value = {}

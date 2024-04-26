@@ -22,7 +22,7 @@ Usando [`folke/lazy.nvim`](https://github.com/folke/lazy.nvim):
         "nvim-lua/plenary.nvim"
     },
     config = true,
-    -- Si quieres configurar algunas opciones, sustituye la línea anterior con:
+    -- If you want to configure some options, replace the previous line with:
     -- config = function()
     -- end,
 }
@@ -34,10 +34,14 @@ Estas son las opciones de configuración predeterminadas:
 
 ```lua
 require('colorformat').setup({{
-    display_virtual_text = true, -- <boolean> Mostrar el texto virtual.
-    target_color_format = "lch", -- <string> Formato del color del texto virtual ('rgb', 'hsl', 'lch' o 'hex').
-    disable_keymaps = false, -- <boolean> Desabihilitar los atajos de teclado.
-    filetypes = { "css", "scss", "sass" }, -- <table> Archivos admitidos.
+    -- <boolean> Display virtual text.
+    display_virtual_text = true,
+    -- <string> Format of the virtual text color ('rgb', 'hsl', 'lch', or 'hex').
+    target_color_format = "lch",
+    -- <boolean> Disable keyboard shortcuts.
+    disable_keymaps = false,
+    -- <table> Accepted file types.
+    filetypes = { "css", "scss", "sass" },
 })
 ```
 
